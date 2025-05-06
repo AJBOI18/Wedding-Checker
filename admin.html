@@ -1,0 +1,56 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Guest Admin Panel</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+    table { border-collapse: collapse; width: 100%; background: #fff; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background-color: #eee; }
+    h1 { color: #333; }
+    button { margin-top: 20px; padding: 10px 15px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Admin Panel - Guest Check Logs</h1>
+  <table id="logTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Table</th>
+        <th>Chair</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <button onclick="clearLogs()">Clear Logs</button>
+
+  <script>
+    const logs = JSON.parse(localStorage.getItem('guestLogs') || '[]');
+    const tbody = document.querySelector('#logTable tbody');
+
+    logs.forEach(log => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${log.name}</td>
+        <td>${log.invited ? 'Invited' : 'Not Invited'}</td>
+        <td>${log.table}</td>
+        <td>${log.chair}</td>
+        <td>${log.time}</td>
+      `;
+      tbody.appendChild(row);
+    });
+
+    function clearLogs() {
+      localStorage.removeItem('guestLogs');
+      location.reload();
+    }
+  </script>
+</body>
+</html>
